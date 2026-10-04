@@ -1,6 +1,6 @@
 # bf16 执行噪声与漂移测量的三分解协议
 
-技术笔记 ｜ 2026-10-02 ｜ Addenda-LM 项目 ｜ 复现脚本: `experiments/pegp_decomp_test.py`
+技术笔记 ｜ 2026-10-02 ｜ PPBExt-Knowledge 项目 ｜ 复现脚本: `experiments/pegp_decomp_test.py`
 
 ---
 
