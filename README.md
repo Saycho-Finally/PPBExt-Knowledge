@@ -2,7 +2,7 @@
 
 **一句话**：把大语言模型当作一本**已经印刷定稿的书**——不重印、不改字，新知识以**补遗（Addenda）**的形式增补：内容门核证、行为锚定、路由隔离、技能模块跨层注入。全部流程在一个本地部署的 4B 模型上做了**初步验证**：**6GB 消费级显卡**、单实验 1.5~8 分钟、脚本与结果随仓库附带（本机验证可复现）。
 
-> 作者：Sycho-Finally（独立研究者）｜ AI 使用声明见 [AI_DISCLOSURE.md](AI_DISCLOSURE.md) ｜ License: MIT
+> 作者：Saycho-Finally（独立研究者）｜ AI 使用声明见 [AI_DISCLOSURE.md](AI_DISCLOSURE.md) ｜ License: MIT
 
 ---
 
