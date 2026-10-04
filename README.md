@@ -73,7 +73,7 @@ pip install torch==2.11.0+cu128 --index-url https://download.pytorch.org/whl/cu1
 pip install transformers accelerate bitsandbytes safetensors tokenizers huggingface_hub numpy requests
 ```
 
-> ⚠️ **已知的坑**（都踩过，写在这里省你半天）：
+> [注意] **已知的坑**（都踩过，写在这里省你半天）：
 > - `pip install torch` 默认装 **CPU 版**（`+cpu`），bitsandbytes 4bit 无法工作，必须从 pytorch 官方源装 CUDA 版
 > - 若装过与 torch 版本不匹配的 **torchvision**，会报 `operator torchvision::nms does not exist` 并连带炸掉 transformers——卸载 torchvision/torchaudio 即可
 > - transformers 5.x 移除了 `quantize_model`；bitsandbytes 的 `Params4bit` 本身是 Parameter 子类，直接赋值不要再用 `nn.Parameter()` 包装

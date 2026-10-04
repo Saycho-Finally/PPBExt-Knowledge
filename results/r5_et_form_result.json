@@ -15,6 +15,6 @@
   },
   "task_a_before": -12.61521462649107,
   "task_a_after": -12.615214665234088,
-  "verdict": "ORTHOGONALITY-CONFIRMED (ET arith ✓ / cipher ✗)",
+  "verdict": "ORTHOGONALITY-CONFIRMED (ET arith [是] / cipher [否])",
   "trainable_params": 2560
 }

@@ -149,7 +149,7 @@ def main():
     print(f"\nTASK_A mean_logp: before={a0:.4f} after={a1:.4f} (差={a1-a0:+.4f}, "
           f"预期≈0: 新 token 不出现在旧任务, 零遗忘由构造保证+执行噪声)")
 
-    verdict = ("ORTHOGONALITY-CONFIRMED (ET arith ✓ / cipher ✗)"
+    verdict = ("ORTHOGONALITY-CONFIRMED (ET arith [是] / cipher [否])"
                if r3["test_hit"] > 0.5 and r2["unseen_exact"] < 0.2
                else "ET-LEARNS-CIPHER (正交性被否 — 嵌入行可存新映射, 更廉价的模块形态)"
                if r2["unseen_exact"] > 0.3
