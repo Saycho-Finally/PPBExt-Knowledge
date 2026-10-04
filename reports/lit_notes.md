@@ -4,7 +4,7 @@
 
 ---
 
-## 1. Memory as a Markov Matrix（ICML 2026, arXiv:2605.04308）★ 与本框架理论关系最近
+## 1. Memory as a Markov Matrix（ICML 2026, arXiv:2605.04308）与本框架理论关系最近
 
 ### 机制
 - 把自回归生成建模为 token 上的一阶马尔可夫过程（上下文 K 的模型 = K 阶链，经 NULL 填充增广状态空间），模型记忆 = 转移矩阵。
@@ -29,7 +29,7 @@
 
 ---
 
-## 2. Engram Adapter（EMNLP 2026 Findings, arXiv:2608.29327）★ 同基座同构
+## 2. Engram Adapter（EMNLP 2026 Findings, arXiv:2608.29327）同基座同构
 
 ### 机制
 - 预训练时的条件记忆改造为事后适配器：**多通道局部 n-gram 匹配 + 占用追踪**作为选择性先验（决定哪些输入倾向注入），**学习型标量门**抑制不相关的 OOD 检索。
