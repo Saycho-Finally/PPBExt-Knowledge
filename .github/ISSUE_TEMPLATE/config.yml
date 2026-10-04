@@ -1,0 +1,5 @@
+blank_issues_enabled: false
+contact_links:
+  - name: 安全漏洞报告
+    url: https://docs.github.com/zh/code-security/security-advisories
+    about: 请勿用公开 Issue 报告安全问题，见 SECURITY.md

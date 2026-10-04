@@ -1,0 +1,13 @@
+cff-version: 1.2.0
+message: "如果本仓库的工作对您的研究有帮助，请按以下格式引用。"
+title: "Addenda-LM：模块化持续学习：冻结基座上的内容门、行为锚定与跨层技能注入（Qwen3-4B 全链路验证）"
+authors:
+  - family-names: "Saycho-Finally"
+    alias: "Saycho-Finally"
+version: "0.3.0"
+date-released: "2026-10-04"
+license: MIT
+abstract: >-
+  模块化持续学习：冻结基座上的内容门、行为锚定与跨层技能注入（Qwen3-4B 全链路验证）
+repository-code: "https://github.com/Saycho-Finally/Addenda-LM"
+type: software

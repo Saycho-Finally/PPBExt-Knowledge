@@ -1,0 +1,32 @@
+name: Bug 报告
+description: 报告可复现的问题
+labels: ["bug"]
+body:
+  - type: textarea
+    id: what
+    attributes:
+      label: 问题描述
+      description: 发生了什么？期望的行为是什么？
+    validations:
+      required: true
+  - type: textarea
+    id: repro
+    attributes:
+      label: 复现步骤
+      description: 最小复现步骤或脚本；如涉及数据/模型，请说明版本
+    validations:
+      required: true
+  - type: input
+    id: env
+    attributes:
+      label: 环境
+      description: 操作系统 / Python 版本 / 相关依赖版本
+    validations:
+      required: true
+  - type: textarea
+    id: logs
+    attributes:
+      label: 日志或输出
+      description: 相关报错或输出（请勿粘贴 API 密钥）
+    validations:
+      required: false

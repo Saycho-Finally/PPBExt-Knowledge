@@ -1,0 +1,10 @@
+# 行尾规范化：仓库内统一 LF，检出时按平台自动转换
+* text=auto eol=lf
+*.bat text eol=crlf
+*.ps1 text eol=crlf
+# 二进制文件不做转换
+*.png binary
+*.jpg binary
+*.zip binary
+*.pt binary
+*.safetensors binary

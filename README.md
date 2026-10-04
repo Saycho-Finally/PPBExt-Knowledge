@@ -175,3 +175,13 @@ A full-pipeline experimental validation of **modular continual learning on a fro
 ## License
 
 MIT — 见 [LICENSE](LICENSE)。基座模型 Qwen3-4B-Instruct-2507 © Alibaba Cloud, Apache 2.0。
+
+
+---
+
+## 贡献与引用
+
+- 贡献指南见 [CONTRIBUTING.md](CONTRIBUTING.md)；行为准则见 [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md)
+- 安全问题请走 [SECURITY.md](SECURITY.md) 的私密渠道（勿开公开 Issue）
+- 版本变更见 [CHANGELOG.md](CHANGELOG.md)；学术引用格式见 [CITATION.cff](CITATION.cff)
+- 许可：MIT
