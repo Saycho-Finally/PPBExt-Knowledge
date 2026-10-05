@@ -13,6 +13,7 @@ from transformers import AutoModelForCausalLM, AutoTokenizer, BitsAndBytesConfig
 # 控制: 同密钥/同16训练数字(seed 11)/同500步/CE-only; 指标加 unseen 逐位准确率.
 # ---------------------------------------------------------------------------
 HERE = os.path.dirname(os.path.abspath(__file__))
+OUT = os.path.join(os.path.dirname(HERE), "results")  # 归档目录
 MODEL_DIR = os.path.join(HERE, "model_cache", "Qwen3-4B-Instruct-2507")
 LAYER_SET = [6, 12, 18, 24, 30]
 N_TRAIN = int(os.environ.get("N_TRAIN", "16"))
@@ -206,7 +207,7 @@ def main():
            "A_drift_global": float(np.mean(dg)), "A_degraded": int(sum(1 for x in dg if x < -0.3)),
            "verdict": verdict,
            "single_mid_ref": {"seen": 1.000, "unseen": 0.0}}
-    with open(os.path.join(HERE, f"skill_multi_result_{TAG}.json"), "w") as f:
+    with open(os.path.join(OUT, f"skill_multi_result_{TAG}.json"), "w") as f:
         json.dump(res, f, indent=2, ensure_ascii=False)
     print("结果写入 skill_multi_result.json", flush=True)
 

@@ -14,6 +14,7 @@ from transformers import AutoModelForCausalLM, AutoTokenizer, BitsAndBytesConfig
 # 这就是"生网络必须先熟化"的实验证据, 也量化了"无门直喂"的后果.
 # ---------------------------------------------------------------------------
 HERE = os.path.dirname(os.path.abspath(__file__))
+OUT = os.path.join(os.path.dirname(HERE), "results")  # 归档目录
 DATA = os.path.join(os.path.dirname(HERE), "data")
 MODEL_DIR = os.path.join(HERE, "model_cache", "Qwen3-4B-Instruct-2507")
 
@@ -123,7 +124,7 @@ def main():
                  "A_delta_mean": float(np.mean(da_P)),
                  "A_degraded": int(sum(1 for x in da_P if x < -0.3))},
            "base_hash": h0}
-    with open(os.path.join(HERE, "web_gate_result.json"), "w") as f:
+    with open(os.path.join(OUT, "web_gate_result.json"), "w") as f:
         json.dump(res, f, indent=2, ensure_ascii=False)
     print("结果写入 web_gate_result.json", flush=True)
 

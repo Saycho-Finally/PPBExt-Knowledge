@@ -115,7 +115,7 @@ python experiments/xinhua_exp_numpy.py      # ⑪ numpy 方法学模拟 (无 GPU
 | `xinhua_exp_numpy.py` | numpy 方法学模拟（多种子） | 多种子走向相关 0.97-0.98 | `xinhua_exp_numpy_result.json` |
 | `mem_continual_test.py` | additive 注入不遗忘 + 哈希 | B 0→100%，A 0/20，哈希不变 | `mem_continual_result.json` |
 | `web_gate_test.py` | 真事实也漂移 + 投毒同速 | A -7.455 (14/20)；投毒 0→1.00 | `web_gate_result.json` |
-| `web_gate_fix.py` | replay 锚压漂移 | A 漂移 +0.212（35 倍改善） | `web_gate_fix_result.json` |
+| `web_gate_fix.py` | replay 锚压漂移 | A 漂移 +0.212（35 倍改善） | （脚本产出，未随仓库归档） |
 | `curator.py` | 规则门自动熟化 | 17 raw → 5 准入 5 拒绝，全对 | `curated_claims.json` |
 | `auto_pipeline_test.py` | raw→门→训练 端到端 | B 0→1.00，A +0.201，1/20 | `auto_pipeline_result.json` |
 | `routing_test.py` | 路由结构性隔离 | A 逐位为零 (bit-exact) | `routing_result.json` |

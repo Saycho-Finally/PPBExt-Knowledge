@@ -17,6 +17,7 @@ from transformers import AutoModelForCausalLM, AutoTokenizer, BitsAndBytesConfig
 # 对照: 无约束多层分支 (N=64): unseen 0.375/逐位0.722, A漂移 +2.419 (6/20).
 # ---------------------------------------------------------------------------
 HERE = os.path.dirname(os.path.abspath(__file__))
+OUT = os.path.join(os.path.dirname(HERE), "results")  # 归档目录
 MODEL_DIR = os.path.join(HERE, "model_cache", "Qwen3-4B-Instruct-2507")
 LAYER_SET = [6, 12, 18, 24, 30]
 R = 1024
@@ -274,7 +275,7 @@ def main():
            "ref_unconstrained": {"unseen_exact": 0.375, "unseen_perpos": 0.722,
                                   "A_drift": 2.419, "A_degraded": 6},
            "verdict": verdict}
-    with open(os.path.join(HERE, "pegp_result.json"), "w") as f:
+    with open(os.path.join(OUT, "pegp_result.json"), "w") as f:
         json.dump(res, f, indent=2, ensure_ascii=False)
     print("结果写入 pegp_result.json", flush=True)
 

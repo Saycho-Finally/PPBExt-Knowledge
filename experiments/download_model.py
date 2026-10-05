@@ -2,7 +2,7 @@ import os, sys, time, requests
 
 # 兜底下载器: 绕过 huggingface_hub 的 Xet 路径(401), 直接 requests 流式拉
 # hf-mirror 的 resolve URL (实测 ~3.6MB/s, 支持 Range 断点续传).
-MODEL_ID = os.environ.get('ADDENDA_MODEL_ID', 'Qwen/Qwen3-4B-Instruct-2507')
+MODEL_ID = os.environ.get('PPB_MODEL_ID', 'Qwen/Qwen3-4B-Instruct-2507')
 BASE = 'https://hf-mirror.com/%s/resolve/main/' % MODEL_ID
 OUT = os.path.join(os.path.dirname(os.path.abspath(__file__)),
                    'model_cache', MODEL_ID.split('/')[-1])

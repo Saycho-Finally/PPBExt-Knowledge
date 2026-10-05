@@ -13,6 +13,7 @@ from transformers import AutoModelForCausalLM, AutoTokenizer, BitsAndBytesConfig
 #   seen≈1 而 unseen≈0 => 只会背训练集 (边界确认: 顶层 adapter 学不了程序)
 # ---------------------------------------------------------------------------
 HERE = os.path.dirname(os.path.abspath(__file__))
+OUT = os.path.join(os.path.dirname(HERE), "results")  # 归档目录
 MODEL_DIR = os.path.join(HERE, "model_cache", "Qwen3-4B-Instruct-2507")
 
 from mem_continual_test import build_example, eval_task, MemBranch, hash_base, TASK_A
@@ -123,7 +124,7 @@ def main():
            "verdict": verdict,
            "key": {str(k): v for k, v in KEY.items()},
            "train_numbers": train_ns, "test_numbers": test_ns}
-    with open(os.path.join(HERE, "skill_result_v2.json"), "w") as f:
+    with open(os.path.join(OUT, "skill_result_v2.json"), "w") as f:
         json.dump(res, f, indent=2, ensure_ascii=False)
     print("结果写入 skill_result_v2.json", flush=True)
 

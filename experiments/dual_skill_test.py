@@ -13,6 +13,7 @@ from transformers import AutoModelForCausalLM, AutoTokenizer, BitsAndBytesConfig
 # 密钥 B: 0->N 1->L ... (备用密码表, 模板"用备用密码表") — 与 A 无共享字母
 # ---------------------------------------------------------------------------
 HERE = os.path.dirname(os.path.abspath(__file__))
+OUT = os.path.join(os.path.dirname(HERE), "results")  # 归档目录
 MODEL_DIR = os.path.join(HERE, "model_cache", "Qwen3-4B-Instruct-2507")
 LAYER_SET = [6, 12, 18, 24, 30]
 R = 1024
@@ -192,7 +193,7 @@ def main():
            "A_global_drift": float(np.mean(dA)), "A_degraded": int(sum(1 for x in dA if x < -0.3)),
            "B_global_drift": float(np.mean(dB)), "B_degraded": int(sum(1 for x in dB if x < -0.3)),
            "base_hash_unchanged": h1 == "28ab9b2cebc0a035"}
-    with open(os.path.join(HERE, "dual_skill_result.json"), "w") as f:
+    with open(os.path.join(OUT, "dual_skill_result.json"), "w") as f:
         json.dump(res, f, indent=2, ensure_ascii=False)
     print("结果写入 dual_skill_result.json", flush=True)
 

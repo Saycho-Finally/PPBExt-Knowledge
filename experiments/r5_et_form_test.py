@@ -16,6 +16,7 @@ from transformers import AutoModelForCausalLM, AutoTokenizer, BitsAndBytesConfig
 # 全部: 可训练参数 = 新嵌入行 (2560), 其余冻结; 零遗忘由构造保证 (TASK_A 无 <|crypt|>).
 # ---------------------------------------------------------------------------
 HERE = os.path.dirname(os.path.abspath(__file__))
+OUT = os.path.join(os.path.dirname(HERE), "results")  # 归档目录
 MODEL_DIR = os.path.join(HERE, "model_cache", "Qwen3-4B-Instruct-2507")
 
 from mem_continual_test import build_example, TASK_A
@@ -159,7 +160,7 @@ def main():
     res = {"r1_cipher_n64": r1, "r2_cipher_n500": r2, "r3_arith_n500": r3,
            "task_a_before": a0, "task_a_after": a1, "verdict": verdict,
            "trainable_params": d}
-    with open(os.path.join(HERE, "r5_et_form_result.json"), "w") as f:
+    with open(os.path.join(OUT, "r5_et_form_result.json"), "w") as f:
         json.dump(res, f, indent=2, ensure_ascii=False)
     print("结果写入 r5_et_form_result.json", flush=True)
 

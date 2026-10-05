@@ -15,6 +15,7 @@ from transformers import AutoModelForCausalLM, AutoTokenizer, BitsAndBytesConfig
 # 两臂各自从全新零初始化分支开始, 同预算 800 步.
 # ---------------------------------------------------------------------------
 HERE = os.path.dirname(os.path.abspath(__file__))
+OUT = os.path.join(os.path.dirname(HERE), "results")  # 归档目录
 MODEL_DIR = os.path.join(HERE, "model_cache", "Qwen3-4B-Instruct-2507")
 LAYER_SET = [6, 12, 18, 24, 30]
 R = 1024
@@ -178,7 +179,7 @@ def main():
                                "pred_bare": ppA[i], "pred_gated": ppB[i]}
                               for i, ((q, a), pa, pb) in enumerate(zip(POISON, pA, pB))],
            "verdict": verdict, "base_hash_unchanged": h1 == "28ab9b2cebc0a035"}
-    with open(os.path.join(HERE, "r2_gate_result.json"), "w") as f:
+    with open(os.path.join(OUT, "r2_gate_result.json"), "w") as f:
         json.dump(res, f, indent=2, ensure_ascii=False)
     print("结果写入 r2_gate_result.json", flush=True)
 

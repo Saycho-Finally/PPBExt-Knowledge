@@ -16,6 +16,7 @@ from transformers import AutoModelForCausalLM, AutoTokenizer, BitsAndBytesConfig
 #       (results/skill_multi_result_n64s800.json: unseen 0.375/逐位 0.722, A +2.419 6/20).
 # ---------------------------------------------------------------------------
 HERE = os.path.dirname(os.path.abspath(__file__))
+OUT = os.path.join(os.path.dirname(HERE), "results")  # 归档目录
 MODEL_DIR = os.path.join(HERE, "model_cache", "Qwen3-4B-Instruct-2507")
 LAYER_SET = [6, 12, 18, 24, 30]
 N_KEYS = int(os.environ.get('PKM_N_KEYS', '32'))    # 键空间粒度 (32→1024槽 / 128→16384槽)
@@ -210,7 +211,7 @@ def main():
            "ref_dense_branch": {"unseen_exact": 0.375, "unseen_perpos": 0.722,
                                  "params": 6567680, "A_drift": 2.419, "A_degraded": 6},
            "base_hash_unchanged": h1 == "28ab9b2cebc0a035"}
-    with open(os.path.join(HERE, f"pkm_vs_dense_result{TAG}.json"), "w") as f:
+    with open(os.path.join(OUT, f"pkm_vs_dense_result{TAG}.json"), "w") as f:
         json.dump(res, f, indent=2, ensure_ascii=False)
     print(f"结果写入 pkm_vs_dense_result{TAG}.json", flush=True)
 

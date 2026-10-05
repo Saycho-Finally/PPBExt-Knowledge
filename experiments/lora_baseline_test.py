@@ -12,6 +12,7 @@ from peft import LoraConfig, get_peft_model, prepare_model_for_kbit_training
 # 指标: seen/unseen 生成 exact、unseen 逐位、旧任务(TASK_A) 漂移(adapter on vs off).
 # ---------------------------------------------------------------------------
 HERE = os.path.dirname(os.path.abspath(__file__))
+OUT = os.path.join(os.path.dirname(HERE), "results")  # 归档目录
 MODEL_DIR = os.path.join(HERE, "model_cache", "Qwen3-4B-Instruct-2507")
 
 from mem_continual_test import build_example, TASK_A
@@ -180,7 +181,7 @@ def main():
            "A_degraded": int(sum(1 for x in dg if x < -0.3)),
            "ref_multilayer_branch": {"unseen_exact": 0.375, "unseen_perpos": 0.722,
                                       "A_drift": 2.419, "A_degraded": 6}}
-    with open(os.path.join(HERE, "lora_baseline_result.json"), "w") as f:
+    with open(os.path.join(OUT, "lora_baseline_result.json"), "w") as f:
         json.dump(res, f, indent=2, ensure_ascii=False)
     print("结果写入 lora_baseline_result.json", flush=True)
 

@@ -18,10 +18,11 @@ from transformers import AutoModelForCausalLM, AutoTokenizer, BitsAndBytesConfig
 # 另含误路由演示: 路由失败只影响当次前向(推理期隔离), 不伤参数、不伤其他输入.
 # ---------------------------------------------------------------------------
 HERE = os.path.dirname(os.path.abspath(__file__))
+OUT = os.path.join(os.path.dirname(HERE), "results")  # 归档目录
 DATA = os.path.join(os.path.dirname(HERE), "data")
-MODEL_DIR = os.environ.get("ADDENDA_MODEL_DIR",
+MODEL_DIR = os.environ.get("PPB_MODEL_DIR",
                           os.path.join(HERE, "model_cache", "Qwen3-4B-Instruct-2507"))
-OUT_TAG = os.environ.get("ADDENDA_TAG", "")
+OUT_TAG = os.environ.get("PPB_TAG", "")
 TAU = 0.25  # 0.2 时"只用...回答"与代号域模板恰好 0.20 误路由(实测边界案例), 收紧留裕量
 
 from mem_continual_test import (build_example, eval_task, MemBranch, hash_base,
@@ -150,7 +151,7 @@ def main():
            "A_drift_forced_mean": float(np.mean(d_forced)),
            "A_degraded_forced": int(sum(1 for x in d_forced if x < -0.3)),
            "base_hash_unchanged": h1 == "28ab9b2cebc0a035"}
-    with open(os.path.join(HERE, f"routing_result{OUT_TAG}.json"), "w") as f:
+    with open(os.path.join(OUT, f"routing_result{OUT_TAG}.json"), "w") as f:
         json.dump(res, f, indent=2, ensure_ascii=False)
     print("结果写入 routing_result.json", flush=True)
 

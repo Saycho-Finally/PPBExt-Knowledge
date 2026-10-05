@@ -1,4 +1,6 @@
 import numpy as np, math, json
+HERE = os.path.dirname(os.path.abspath(__file__))
+OUT = os.path.join(os.path.dirname(HERE), "results")  # 归档目录
 
 # 新华字典理论 · 逻辑层模拟测试 (numpy)
 # ---------------------------------------------------------------------------
@@ -274,7 +276,7 @@ def main():
 
     out = {"vocab": V, "loss_start": losses[0], "loss_end": losses[-1],
            "results": {k: {"out_ent": v["out_ent"], "hid": v["hid"], "attn": v["attn"]} for k, v in res.items()}}
-    with open("xinhua_exp_numpy_result.json", "w") as f:
+    with open(os.path.join(OUT, "xinhua_exp_numpy_result.json"), "w") as f:
         json.dump(out, f, indent=2)
     print("\n结果写入 xinhua_exp_numpy_result.json")
 

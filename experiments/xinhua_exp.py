@@ -3,6 +3,8 @@ os.environ.setdefault('HF_ENDPOINT', 'https://hf-mirror.com')
 import torch
 import numpy as np
 from transformers import AutoModelForCausalLM, AutoTokenizer, AutoConfig, BitsAndBytesConfig
+HERE = os.path.dirname(os.path.abspath(__file__))
+OUT = os.path.join(os.path.dirname(HERE), "results")  # 归档目录
 
 # 4B 实机测试 (master 指定, 逻辑验证足够). 硬件: RTX 3060 6GB / RAM 16GB(空闲~2.7G).
 # 两模型均 4-bit(~2.3GB) 进显存:
@@ -154,7 +156,7 @@ def main():
            "trained": r_t, "random": r_r, "hid_corr": hc, "attn_corr": ac,
            "hid_trend_trained": trend(r_t['hid_norm_traj']),
            "hid_trend_random": trend(r_r['hid_norm_traj'])}
-    with open("xinhua_exp_result.json", "w") as f:
+    with open(os.path.join(OUT, "xinhua_exp_result.json"), "w") as f:
         json.dump(res, f, indent=2)
     print("\n结果已写入 xinhua_exp_result.json")
 

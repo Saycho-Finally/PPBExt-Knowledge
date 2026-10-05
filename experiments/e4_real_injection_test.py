@@ -12,6 +12,7 @@ from transformers import AutoModelForCausalLM, AutoTokenizer, BitsAndBytesConfig
 #       + TASK_A 漂移(全局激活) + 主干哈希.
 # ---------------------------------------------------------------------------
 HERE = os.path.dirname(os.path.abspath(__file__))
+OUT = os.path.join(os.path.dirname(HERE), "results")  # 归档目录
 MODEL_DIR = os.path.join(HERE, "model_cache", "Qwen3-4B-Instruct-2507")
 LAYER_SET = [6, 12, 18, 24, 30]
 R = 1024
@@ -180,7 +181,7 @@ def main():
                           "base_pred": bf[2], "trained_pred": tf[2],
                           "trained_loose_hit": tf[0], "trained_exact": tf[1]}
                          for (q, a), bf, tf in zip(FACTS, base_facts, tr_facts)]}
-    with open(os.path.join(HERE, "e4_real_injection_result.json"), "w") as f:
+    with open(os.path.join(OUT, "e4_real_injection_result.json"), "w") as f:
         json.dump(res, f, indent=2, ensure_ascii=False)
     print("结果写入 e4_real_injection_result.json", flush=True)
 

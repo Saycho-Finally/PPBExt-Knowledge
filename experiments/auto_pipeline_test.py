@@ -9,6 +9,7 @@ from transformers import AutoModelForCausalLM, AutoTokenizer, BitsAndBytesConfig
 # 验证"自动熟化管线"全链路: 门产出直接消费, 无人工核证环节.
 # ---------------------------------------------------------------------------
 HERE = os.path.dirname(os.path.abspath(__file__))
+OUT = os.path.join(os.path.dirname(HERE), "results")  # 归档目录
 DATA = os.path.join(os.path.dirname(HERE), "data")
 MODEL_DIR = os.path.join(HERE, "model_cache", "Qwen3-4B-Instruct-2507")
 
@@ -54,7 +55,7 @@ def main():
            "A_delta_mean": float(np.mean(da)),
            "A_degraded": int(sum(1 for x in da if x < -0.3)),
            "base_hash_unchanged": h1 == "28ab9b2cebc0a035"}
-    with open(os.path.join(HERE, "auto_pipeline_result.json"), "w") as f:
+    with open(os.path.join(OUT, "auto_pipeline_result.json"), "w") as f:
         json.dump(res, f, indent=2, ensure_ascii=False)
     print("结果写入 auto_pipeline_result.json", flush=True)
 

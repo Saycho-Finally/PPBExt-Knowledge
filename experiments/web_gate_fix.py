@@ -11,6 +11,7 @@ from transformers import AutoModelForCausalLM, AutoTokenizer, BitsAndBytesConfig
 # 这是补丁四(consolidation/sleep replay)的最小实现, 也是"熟网络"的第二层: 行为熟化.
 # ---------------------------------------------------------------------------
 HERE = os.path.dirname(os.path.abspath(__file__))
+OUT = os.path.join(os.path.dirname(HERE), "results")  # 归档目录
 DATA = os.path.join(os.path.dirname(HERE), "data")
 MODEL_DIR = os.path.join(HERE, "model_cache", "Qwen3-4B-Instruct-2507")
 
@@ -125,7 +126,7 @@ def main():
            "A_delta_mean": float(np.mean(da)),
            "A_degraded": int(sum(1 for x in da if x < -0.3)),
            "baseline_unanchored": {"A_delta_mean": -7.455, "A_degraded": 14}}
-    with open(os.path.join(HERE, "web_gate_fix_result.json"), "w") as f:
+    with open(os.path.join(OUT, "web_gate_fix_result.json"), "w") as f:
         json.dump(res, f, indent=2, ensure_ascii=False)
     print("结果写入 web_gate_fix_result.json", flush=True)
 
