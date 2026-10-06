@@ -122,17 +122,28 @@ python experiments/xinhua_exp_numpy.py      # ⑪ numpy 方法学模拟 (无 GPU
 | `skill_test2.py` | 顶层=记忆 only | unseen 0.000 | `skill_result_v2.json` |
 | `skill_mid_test.py` | 中层修复记忆不修复泛化 | seen 1.000 / unseen 0.000 | （stdout） |
 | `skill_multi_test.py` | 跨层×数据量相变曲线 | 256 样本 unseen 1.000 | `skill_multi_result_*.json` |
-| `pegp_multilayer_test.py` | PEGP 零空间投影 | 锚输出 1e-6；噪声地板暴露 | `pegp_result.json` |
-| `pegp_decomp_test.py` | 漂移三分解 | 执行噪声占 80.2% | `pegp_decomp_result.json` |
+| `pegp_multilayer_test.py` | PEGP 零空间投影 | **verdict=CHECK（未达标）**：锚投影按构造保持，但任务 A 均值漂移 **5.30**（6/20 条退化）；记录见 `pegp_result.json` | `pegp_result.json` |
+| `pegp_decomp_test.py` | 漂移三分解 | 执行噪声占 80.2% — **该脚本未随仓库归档，此数字当前不可复现**，见 [reports/可复现性声明_2026-10-07.md](reports/可复现性声明_2026-10-07.md) | `pegp_decomp_result.json` |
 | `diag_pegp.py` | 逐层诊断工具 | 定位执行噪声根因 | （stdout） |
+| `pkm_vs_dense_test.py` | PKM 乘积键 vs 稠密分支 | **两种配置均未泛化**：seen 1.000 但 unseen_exact **0.000**（稠密分支 0.375）；A 退化 7/12 条 | `pkm_vs_dense_result{,_granular}.json` |
+
+**清单口径**：上表只列"结果已在正文被引用"的脚本；仓内另有若干探索性脚本与运行器
+（`phase1*.sh` / `skill_test2` 等）未逐一列出。**负结果与失败配置同样列出**
+（PEGP 为 CHECK、PKM 两配置未泛化），不作为可选项省略。
 
 ---
 
 ## 测量方法论（重要）
 
 全局激活实验的漂移测量**必须做三分解**：`直通（off）`、`挂零初始化分支（zero，数学恒等但执行上下文相同）`、`挂训练后分支（trained）`。
-`zero − off` 是 bf16 执行噪声（分支矩阵乘改变 cuBLAS 上下文，大激活坐标 ~7000 处 ULP=32 产生 ±32 噪声），实测占表观漂移的 **80.2%**；`trained − zero` 才是模块的真实语义效应。
+`zero − off` 是 bf16 执行噪声（分支矩阵乘改变 cuBLAS 上下文，大激活坐标 ~7000 处 ULP=32 产生 ±32 噪声），实测占表观漂移的 **80.2%**（**口径见下方声明**）；`trained − zero` 才是模块的真实语义效应。
 不做三分解，会把机器抖动误判为模型学坏。路由（不执行分支矩阵乘）是唯一逐位精确的隔离方案。
+
+**可复现性声明（2026-10-07）**：产生 80.2% 的脚本 `experiments/pegp_decomp_test.py`
+**未随仓库归档**（`results/pegp_decomp_result.json` 在仓，但无对应脚本），
+故该数字目前**不可从仓内脚本复现**。三分解的**方法**已在实验过程中使用并被后续
+实验沿用（`results/pegp_decomp_result.json` 保留原始分解数据，可用 `diag_pegp.py`
+的逐层口径部分复核）。重建脚本列入待办，重建前引用该数字请标注"脚本未归档"。
 
 **外部实证（2026-10 查新）**：Greedy Decoding Is Not Precision-Invariant
 （arXiv:2609.26621，TMLR）实测同 checkpoint 同提示下 BF16 与 FP16 的贪心生成

@@ -5,6 +5,16 @@
 
 ## [Unreleased]
 
+### Fixed
+
+- **可复现性与选择性报告**（2026-10-07 外部评审触发，已复核确认）：
+  ① 产生"执行噪声占 80.2%"的脚本 `experiments/pegp_decomp_test.py` **未随仓库归档**，
+  该数字当前不可复现——README 与 `reports/bf16_noise_methodology.md` 已加可复现性声明；
+  ② 实验清单里 PEGP 一行只写"锚输出 1e-6"，未提 `pegp_result.json` 的
+  **verdict=CHECK** 与任务 A 均值漂移 **5.30**（6/20 条退化）——已按原始记录更正；
+  ③ `pkm_vs_dense_test.py` 在仓、两条结果均**未泛化**（seen 1.000 / unseen_exact 0.000，
+  稠密分支 0.375）却未列入清单——已补入并明确"负结果同样列出"
+
 ### Added
 
 - `reports/外部对照_查新_2026-10-06.md`：广域时效性查新（Engram Adapter 细化、
