@@ -134,6 +134,12 @@ python experiments/xinhua_exp_numpy.py      # ⑪ numpy 方法学模拟 (无 GPU
 `zero − off` 是 bf16 执行噪声（分支矩阵乘改变 cuBLAS 上下文，大激活坐标 ~7000 处 ULP=32 产生 ±32 噪声），实测占表观漂移的 **80.2%**；`trained − zero` 才是模块的真实语义效应。
 不做三分解，会把机器抖动误判为模型学坏。路由（不执行分支矩阵乘）是唯一逐位精确的隔离方案。
 
+**外部实证（2026-10 查新）**：Greedy Decoding Is Not Precision-Invariant
+（arXiv:2609.26621，TMLR）实测同 checkpoint 同提示下 BF16 与 FP16 的贪心生成
+49%-100% 发散，且 **Qwen2.5-3B 在 GSM8K 上 19% 的提示最终答案翻转而聚合精度只动约
+1 个点**（"漂移藏在基准分数里"）；arXiv:2510.04212 进一步证明低精度累加偏置是
+**系统性而非随机**的。这两条把"必须逐位测量"从本仓库的经验观察升级为公开结论。
+
 ---
 
 ## 已知局限（诚实边界）
@@ -149,6 +155,11 @@ python experiments/xinhua_exp_numpy.py      # ⑪ numpy 方法学模拟 (无 GPU
 ## 引用的先行者（部分思路来自这些工作）
 
 > 该方向 2026 年研究极度活跃；以下仅列与本仓库组件直接相关者，未穷尽。
+> **定位校准（2026-10-06 查新）**："模块化知识注入进冻结基座"已是拥挤赛道
+> （DMoE / TokenMem / GAG / HyperNetwork / Engram Adapter 等）。本仓库的增量
+> 收紧为**注入决策的测量学**：样本量相变曲线、知识/程序边界、逐位纪律、
+> 消费级硬件坐标。逐篇对照见
+> [reports/外部对照_查新_2026-10-06.md](reports/外部对照_查新_2026-10-06.md)。
 
 - Memory Layers at Scale (Meta FAIR, arXiv:2412.09764) — 模块容量形态
 - MAC: Memory of Amortized Contexts — 冻结基座免梯度在线适应
@@ -157,7 +168,12 @@ python experiments/xinhua_exp_numpy.py      # ⑪ numpy 方法学模拟 (无 GPU
 - Macaron-V1 (arXiv:2608.09819) — 冻结基座 + 专家路由的生产实践
 - CL under Backdoor Attacks (arXiv:2609.06346) — 持续学习投毒防御
 - GraftLLM (arXiv, SkillPack) — 模块化技能包 + 免遗忘持续学习 + 路由
-- **Engram Adapter** (EMNLP 2026 Findings, arXiv:2608.29327) — 条件记忆适配器（同基座 Qwen3-4B；n-gram 选择先验 + 标量门，与本文路由组件同构）
+- **Engram Adapter** (EMNLP 2026 Findings, arXiv:2608.29327) — 条件记忆适配器（同基座 Qwen3-4B **与 Qwen3-8B**；n-gram 选择先验 + 标量门，OOD 保持 99.4%-100.1%，残差衰减至隐藏态范数 ~0.08%，与本文路由组件同构）
+- **DeepSeek Engram** (arXiv + 开源, 2026-01, Conditional Memory via Scalable Lookup) — 条件记忆作为 MoE 之外的新稀疏维度；U 型配比（20-25% 稀疏预算给记忆最优）、O(1) 哈希查找、主机内存预取开销 <3%（**预训练架构**路线，与本仓库的后置注入不同层）
+- **Knowing-Using Gap** (arXiv:2607.08393) — "记住但不会用"的形式化与机制解释（知识回路错位）；对应本仓库"程序注入 seen 1.000 / unseen 0.000"的发现，引用时的标准出处
+- **The Router Within (Gavel)** (arXiv:2609.15982) — 冻结 LLM 前向传播自带路由信号，两个线性映射即可读出（佐证判定器光谱的内部表示探针档）
+- **TokenMem** — 冻结模型知识冲突的独立 softmax 通道注入（冲突遵从 69-70% 对 RAG 20-52%）
+- **Rote Learning Considered Useful** (ICLR 2026) — "先机械记忆、后语义泛化"两阶段（与本文合成代号域设计同思路）
 - **Memory as a Markov Matrix** (ICML 2026, arXiv:2605.04308) — token-to-dictionary 映射、可证零遗忘与样本复杂度界（与本文"字典+补遗"设定同构的理论版）
 - **Brainstacks** (arXiv:2604.01152) — 冻结 MoE-LoRA 栈 + 零空间投影 + outcome 路由
 - **DMoE** (arXiv:2606.14243) — 与基座解耦的专家做参数化知识注入（末层 FFN 挂载）

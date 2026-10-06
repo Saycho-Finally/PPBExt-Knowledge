@@ -6,7 +6,9 @@
   "A_mean_logp_before": -5.1273,
   "A_mean_logp_after": -5.3232,
   "A_delta_mean": -0.1959,
-  "A_items_abs_gt_03": 10,
+  "A_items_drop_gt_03": 10,
+  "A_items_rise_gt_03": 6,
   "base_hash_unchanged": true,
-  "note": "结果 JSON 因脚本标签静默失配未自动落盘, 本文件由 stdout 指标补录; SmolLM2 中文基线弱, 逐条噪声相对更大但均值可控"
+  "companion_raw": "mem_continual_result_smollm2_raw.json",
+  "note": "本文件为 stdout 补录摘要（当时脚本标签静默失配未自动落盘，v0.3.1 起输出路径已修复）。口径：drop/rise 指逐条漂移超过 0.3 的条数，漂移 = 训练后 logp − 训练前 logp。逐条原始值见 mem_continual_result_smollm2_raw.json（其 A_items 字段是任务 A 的训练前 logp，不是漂移量）。SmolLM2 中文基线弱，逐条噪声相对更大但均值可控"
 }

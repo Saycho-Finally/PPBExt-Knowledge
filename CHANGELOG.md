@@ -5,6 +5,23 @@
 
 ## [Unreleased]
 
+### Added
+
+- `reports/外部对照_查新_2026-10-06.md`：广域时效性查新（Engram Adapter 细化、
+  DeepSeek Engram、DMoE、Gavel、Knowing-Using Gap、TokenMem、bf16 精度不变性三篇）。
+  定位校准：本仓库增量收紧为"注入决策的测量学"；README 先行者清单与测量方法论节
+  同步补引
+
+### Fixed
+
+- E2a（SmolLM2 跨厂商）的口径更正：报告此前把"**10/20 条下降超过 0.3**"误写为
+  "10/20 条 |d|>0.3"——按原始数据复算，|d|>0.3 实为 16/20（降 10、升 6）。
+  数值本身无误，口径表述已更正，并在报告中补两份数据文件的口径说明
+  （`_raw` 为脚本原始产出，`A_items` 字段是训练前 logp 而非漂移量；
+  无后缀的摘要版为当时的 stdout 补录，两份并列保留）
+- 补录摘要的误导性字段名 `A_items_abs_gt_03` 更名为 `A_items_drop_gt_03`，
+  并补 `A_items_rise_gt_03` 与指向原始文件的引用
+
 ## [0.3.1] - 2026-10-05
 
 ### Added
